@@ -25,17 +25,3 @@ class MaxPool2DLayer:
                 row.append(max(matrix_to_vector(input_region)))
             output.append(row)
         return output
-
-def main():
-    input = [[1,2,3,4,5],
-             [6,7,8,9,10],
-             [11,12,13,14,15],
-             [16,17,18,19,20],
-             [21,22,23,24,25]]
-    pool_size = 3
-    stride = 1
-    maxpool2d_layer = MaxPool2DLayer(input, pool_size, stride)
-    print(maxpool2d_layer.forward())
-
-if __name__ == "__main__":  
-    main()
