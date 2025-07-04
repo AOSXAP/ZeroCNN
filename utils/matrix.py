@@ -1,4 +1,12 @@
 def get_input_region(input, i, j, size):
+    '''
+    Gets a region of the input matrix.
+
+    input: the input matrix
+    i: the row index of the top-left corner of the region
+    j: the column index of the top-left corner of the region
+    size: the size of the region
+    '''
     region = []
     for row in range(i, i+size):
         region.append([])
@@ -7,19 +15,13 @@ def get_input_region(input, i, j, size):
     return region
 
 def matrix_to_vector(matrix):
+    '''
+    Converts a matrix to a vector.
+
+    matrix: the matrix to convert
+    '''
     vector = []
     for row in matrix:
         for col in row:
             vector.append(col)
     return vector
-
-def main():
-    input = [[1,2,3,4,5],
-             [6,7,8,9,10],
-             [11,12,13,14,15],
-             [16,17,18,19,20],
-             [21,22,23,24,25]]
-    print(get_input_region(input, 2, 2, 3))
-
-if __name__ == "__main__":
-    main()
