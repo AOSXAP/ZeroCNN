@@ -1,5 +1,11 @@
 import random
 
+'''
+A fully connected layer.
+
+input_size: the size of the input
+output_size: the size of the output
+'''
 class DenseLayer:
     def __init__(self, input, output_size):
         self.input = input

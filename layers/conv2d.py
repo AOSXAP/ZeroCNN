@@ -11,7 +11,6 @@ kernel_size: the size of the filter
 stride: the number of pixels the filter moves after each convolution
 padding: the number of pixels added to the edges of the input to maintain the output size
 '''
-
 class Convolutional2DLayer:
     def __init__(self, input, kernel, stride, padding):
         self.input = input

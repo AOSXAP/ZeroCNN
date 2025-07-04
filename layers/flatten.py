@@ -1,7 +1,6 @@
 '''
 Flattens the input into a 1D vector.
 '''
-
 class FlattenLayer:
     def __init__(self, input):
         self.input = input

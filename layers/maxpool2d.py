@@ -1,4 +1,5 @@
 from utils.matrix import get_input_region, matrix_to_vector
+
 '''
 Applies a max pooling operation to the input.
 
@@ -6,7 +7,6 @@ input_size: the size of the input
 pool_size: the size of the pooling window
 stride: the number of pixels the pooling window moves after each pooling
 '''
-
 class MaxPool2DLayer:
     def __init__(self, input, pool_size, stride):
         self.input = input
