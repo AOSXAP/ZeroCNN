@@ -1,5 +1,7 @@
 '''
 Flattens the input into a 1D vector.
+
+input: the input to the flatten layer
 '''
 class FlattenLayer:
     def __init__(self, input):
