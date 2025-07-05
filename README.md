@@ -28,3 +28,11 @@
 5. **SoftmaxLayer**
    - Implement the softmax activation for output classification.
    - Include cross-entropy loss calculation and gradient computation.
+
+--- 
+
+## Run the CNN on the MNIST dataset:
+- 28x28 grayscale images
+- 10 classes (0-9)
+- 60,000 training images
+- 10,000 test images

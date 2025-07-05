@@ -11,7 +11,7 @@ kernel_size: the size of the filter
 stride: the number of pixels the filter moves after each convolution
 padding: the number of pixels added to the edges of the input to maintain the output size
 '''
-class Convolutional2DLayer:
+class Convolutional2DLayer(Layer):
     def __init__(self, input, kernel, stride, padding):
         self.input = input
         self.input_size = len(input)
@@ -46,3 +46,17 @@ class Convolutional2DLayer:
         for i in range(self.padding):
             padded_input.append([0] * (self.input_size + 2 * self.padding))
         self.input = padded_input
+
+    def backward(self, grad_output):
+        grad_input = [[0 for _ in range(self.input_size)] for _ in range(self.input_size)]
+        for i in range(0, self.input_size - self.kernel_size + 1, self.stride):
+            for j in range(0, self.input_size - self.kernel_size + 1, self.stride):
+                input_region = get_input_region(self.input, i, j, self.kernel_size)
+                input_region_vector = matrix_to_vector(input_region)
+                grad_input[i][j] = dot_product(input_region_vector, grad_output)
+        return grad_input
+
+if __name__ == "__main__":
+    conv2d_layer = Convolutional2DLayer([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], 1, 0)
+    print(conv2d_layer.forward())
+    print(conv2d_layer.backward([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
