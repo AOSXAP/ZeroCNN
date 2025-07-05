@@ -1,4 +1,5 @@
 import math
+from layers.layer import Layer
 
 '''
 Applies the softmax function to the input.
@@ -15,8 +16,3 @@ class SoftmaxLayer(Layer):
 
     def backward(self, y_true):
         return [o - t for o, t in zip(self.output, y_true)]
-
-if __name__ == "__main__":
-    softmax_layer = SoftmaxLayer()
-    print(softmax_layer.forward([1, 2, 3]))
-    print(softmax_layer.backward([0, 0, 1]))

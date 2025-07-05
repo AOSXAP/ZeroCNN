@@ -1,4 +1,5 @@
 import random
+from layers.layer import Layer
 
 '''
 A fully connected layer.
@@ -38,8 +39,3 @@ class DenseLayer(Layer):
             for j in range(self.input_size):
                 grad_input[j] += grad_output[i] * self.weights[i][j]
         return grad_input
-
-if __name__ == "__main__":
-    dense_layer = DenseLayer([1, 2, 3], 2)
-    print(dense_layer.forward())
-    print(dense_layer.backward([1, 2]))

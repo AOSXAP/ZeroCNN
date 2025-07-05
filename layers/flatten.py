@@ -1,3 +1,5 @@
+from layers.layer import Layer
+
 '''
 Flattens the input into a 1D vector.
 

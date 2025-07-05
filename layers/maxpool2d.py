@@ -1,4 +1,5 @@
 from utils.matrix import get_input_region, matrix_to_vector
+from layers.layer import Layer
 
 '''
 Applies a max pooling operation to the input.

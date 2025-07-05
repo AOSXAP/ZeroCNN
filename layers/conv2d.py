@@ -1,3 +1,4 @@
+from layers.layer import Layer
 from utils.matrix import get_input_region, matrix_to_vector
 from utils.maths import dot_product   
 
@@ -55,8 +56,3 @@ class Convolutional2DLayer(Layer):
                 input_region_vector = matrix_to_vector(input_region)
                 grad_input[i][j] = dot_product(input_region_vector, grad_output)
         return grad_input
-
-if __name__ == "__main__":
-    conv2d_layer = Convolutional2DLayer([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], 1, 0)
-    print(conv2d_layer.forward())
-    print(conv2d_layer.backward([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
