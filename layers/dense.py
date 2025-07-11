@@ -12,9 +12,8 @@ class DenseLayer(Layer):
         self.input_size = input_size
         self.output_size = output_size
         
-        # Initialize weights and biases
-        self.weights = [[random.uniform(-0.5, 0.5) for _ in range(self.input_size)] for _ in range(self.output_size)]
-        self.bias = [random.uniform(-0.5, 0.5) for _ in range(self.output_size)]
+        self.weights = [[random.uniform(-0.1, 0.1) for _ in range(self.input_size)] for _ in range(self.output_size)]
+        self.bias = [random.uniform(-0.1, 0.1) for _ in range(self.output_size)]
 
     def forward(self, input):
         self.input = input
@@ -33,9 +32,20 @@ class DenseLayer(Layer):
 
         return output
 
-    def backward(self, grad_output):
+    def backward(self, grad_output, learning_rate=0.01):
+        # Compute gradients for input
         grad_input = [0] * self.input_size
         for i in range(self.output_size):
             for j in range(self.input_size):
                 grad_input[j] += grad_output[i] * self.weights[i][j]
+        
+        # Update weights and biases
+        for i in range(self.output_size):
+            # Update bias
+            self.bias[i] -= learning_rate * grad_output[i]
+            
+            # Update weights
+            for j in range(self.input_size):
+                self.weights[i][j] -= learning_rate * grad_output[i] * self.input[j]
+        
         return grad_input
