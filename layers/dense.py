@@ -8,16 +8,16 @@ input_size: the size of the input
 output_size: the size of the output
 '''
 class DenseLayer(Layer):
-    def __init__(self, input, output_size):
-        self.input = input
-        self.input_size = len(input)
+    def __init__(self, input_size, output_size):
+        self.input_size = input_size
         self.output_size = output_size
-        self.output = [0] * self.output_size
+        
+        # Initialize weights and biases
+        self.weights = [[random.uniform(-0.5, 0.5) for _ in range(self.input_size)] for _ in range(self.output_size)]
+        self.bias = [random.uniform(-0.5, 0.5) for _ in range(self.output_size)]
 
-        self.weights = [[random.random() for _ in range(self.input_size)] for _ in range(self.output_size)]
-        self.bias = [random.random() for _ in range(self.output_size)]
-
-    def forward(self):
+    def forward(self, input):
+        self.input = input
         output = []
 
         for i in range(self.output_size):

@@ -9,7 +9,7 @@ class Layer:
         pass
 
     def forward(self, input):
-        pass
+        raise NotImplementedError("Subclasses must implement forward method")
 
     def backward(self, grad_output):
-        pass
+        raise NotImplementedError("Subclasses must implement backward method")

@@ -4,20 +4,19 @@ from layers.layer import Layer
 '''
 Applies a max pooling operation to the input.
 
-input_size: the size of the input
 pool_size: the size of the pooling window
 stride: the number of pixels the pooling window moves after each pooling
 '''
 class MaxPool2DLayer(Layer):
-    def __init__(self, input, pool_size, stride):
-        self.input = input
-        self.input_height = len(input)
-        self.input_width = len(input[0])
-
+    def __init__(self, pool_size, stride):
         self.pool_size = pool_size
         self.stride = stride
 
-    def forward(self):
+    def forward(self, input):
+        self.input = input
+        self.input_height = len(input)
+        self.input_width = len(input[0])
+        
         output = []
         for i in range(0, self.input_height - self.pool_size + 1, self.stride):
             row = []

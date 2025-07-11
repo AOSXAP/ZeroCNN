@@ -2,17 +2,17 @@ from layers.layer import Layer
 
 '''
 Flattens the input into a 1D vector.
-
-input: the input to the flatten layer
 '''
 class FlattenLayer(Layer):
-    def __init__(self, input):
+    def __init__(self):
+        pass
+
+    def forward(self, input):
         self.input = input
         self.input_height = len(input)
         self.input_width = len(input[0])
-
-    def forward(self):
-        self.output = [item for sublist in self.input for item in sublist]
+        
+        self.output = [item for sublist in input for item in sublist]
         return self.output
 
     def backward(self, grad_output):
