@@ -50,8 +50,6 @@ class Convolutional2DLayer(Layer):
         return padded_input
 
     def backward(self, grad_output):
-        # For simplicity, we'll implement a basic backward pass
-        # In practice, this would involve more complex gradient calculations
         grad_input = [[0 for _ in range(self.input_size)] for _ in range(self.input_size)]
         
         # Get the output dimensions

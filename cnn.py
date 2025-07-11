@@ -5,6 +5,7 @@ from layers.flatten import FlattenLayer
 from layers.dense import DenseLayer
 from layers.softmax import SoftmaxLayer
 from layers.dropout import DropoutLayer
+from layers.relu import ReLULayer
 from utils.maths import relu_matrix
 from mnist import read_images, read_labels
 import math
@@ -12,7 +13,7 @@ import random
 
 class ZeroCNN:
     def __init__(self):
-        self.layers = []  # Fixed: properly initialize as instance variable
+        self.layers = []  
 
     def add_layer(self, layer: Layer):
         self.layers.append(layer)
@@ -88,48 +89,51 @@ class ZeroCNN:
         return accuracy
 
 def create_mnist_cnn():
-    """Create a CNN architecture suitable for MNIST classification"""
+    """Simple and effective CNN architecture"""
     cnn = ZeroCNN()
     
-    # First convolutional layer with edge detection kernel
-    # MNIST images are 28x28, so we use a 3x3 kernel
+    # First convolutional block - simpler kernels
     conv1_kernel = [
         [0.1, 0.1, 0.1],
-        [0.1, 0.8, 0.1],
+        [0.1, 0.5, 0.1],
         [0.1, 0.1, 0.1]
     ]
     cnn.add_layer(Convolutional2DLayer(conv1_kernel, stride=1, padding=1))
+    cnn.add_layer(ReLULayer())
     
     # First max pooling layer (reduces 28x28 to 14x14)
     cnn.add_layer(MaxPool2DLayer(pool_size=2, stride=2))
     
-    # Second convolutional layer with different kernel
+    # Second convolutional block
     conv2_kernel = [
         [0.2, 0.0, -0.2],
-        [0.4, 0.0, -0.4],
+        [0.3, 0.0, -0.3],
         [0.2, 0.0, -0.2]
     ]
     cnn.add_layer(Convolutional2DLayer(conv2_kernel, stride=1, padding=1))
+    cnn.add_layer(ReLULayer())
     
     # Second max pooling layer (reduces 14x14 to 7x7)
     cnn.add_layer(MaxPool2DLayer(pool_size=2, stride=2))
     
-    # Flatten layer to convert 7x7 feature map to 1D vector
+    # Flatten layer
     cnn.add_layer(FlattenLayer())
     
-    # Dense layer (fully connected) - 7x7 = 49 inputs to 64 hidden units
+    # Simpler dense architecture
+    # First dense layer - 49 to 64
     cnn.add_layer(DenseLayer(49, 64))
+    cnn.add_layer(ReLULayer())
+    cnn.add_layer(DropoutLayer(dropout_rate=0.3))  
     
-    # Dropout layer to prevent overfitting
-    cnn.add_layer(DropoutLayer(dropout_rate=0.5))
+    # Second dense layer - 64 to 32
+    cnn.add_layer(DenseLayer(64, 32))
+    cnn.add_layer(ReLULayer())
+    cnn.add_layer(DropoutLayer(dropout_rate=0.2))  
     
-    # Output layer - 64 inputs to 10 outputs (for 10 digit classes)
-    cnn.add_layer(DenseLayer(64, 10))
+    # Output layer - 32 to 10
+    cnn.add_layer(DenseLayer(32, 10))
     
-    # Dropout layer before final classification (lighter dropout)
-    cnn.add_layer(DropoutLayer(dropout_rate=0.3))
-    
-    # Softmax layer for probability distribution
+    # Softmax layer
     cnn.add_layer(SoftmaxLayer())
     
     return cnn
@@ -149,13 +153,13 @@ def train_mnist_cnn():
     cnn = create_mnist_cnn()
     
     # Training parameters
-    epochs = 10 
-    batch_size = 100  
-    learning_rate = 0.01 
+    epochs = 20  
+    batch_size = 1000  
+    learning_rate = 0.01  
     
     # Early stopping parameters
     best_accuracy = 0.0
-    patience = 3
+    patience = 3  
     patience_counter = 0
     
     print("Starting training...")
@@ -171,7 +175,7 @@ def train_mnist_cnn():
         total_loss = 0
         num_batches = len(train_images_shuffled) // batch_size
         
-        for batch_idx in range(min(20, num_batches)):  # Limit batches for reasonable training time
+        for batch_idx in range(min(20, num_batches)):  
             batch_loss = 0
             start_idx = batch_idx * batch_size
             end_idx = start_idx + batch_size

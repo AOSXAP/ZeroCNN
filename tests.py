@@ -4,6 +4,7 @@ from layers.maxpool2d import MaxPool2DLayer
 from layers.flatten import FlattenLayer
 from layers.dense import DenseLayer
 from layers.softmax import SoftmaxLayer
+from layers.relu import ReLULayer
 
 class TestFramework:
     def __init__(self):
@@ -63,6 +64,20 @@ class LayersTest(TestFramework):
         # Check if outputs are close enough (floating point precision)
         if not all(abs(a - b) < 1e-10 for a, b in zip(output, expected)):
             raise Exception(f"Softmax layer forward test failed. Got {output}, expected {expected}")
+
+    def test_relu(self):
+        relu_layer = ReLULayer()
+        # Test 1D input
+        output1d = relu_layer.forward([-2, -1, 0, 1, 2])
+        expected1d = [0, 0, 0, 1, 2]
+        if output1d != expected1d:
+            raise Exception(f"ReLU layer 1D forward test failed. Got {output1d}, expected {expected1d}")
+        
+        # Test 2D input
+        output2d = relu_layer.forward([[-1, 2], [3, -4]])
+        expected2d = [[0, 2], [3, 0]]
+        if output2d != expected2d:
+            raise Exception(f"ReLU layer 2D forward test failed. Got {output2d}, expected {expected2d}")
 
 
 

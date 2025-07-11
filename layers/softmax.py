@@ -16,6 +16,4 @@ class SoftmaxLayer(Layer):
         return self.output
 
     def backward(self, grad_output):
-        # For classification, grad_output is typically the difference between predicted and true labels
-        # For simplicity, we'll just pass the gradient through
         return grad_output
