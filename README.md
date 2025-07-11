@@ -46,8 +46,6 @@ ZeroCNN/
 ```
 
 ## MNIST Data
-
-Download from [Yann LeCun's website](http://yann.lecun.com/exdb/mnist/) and place in `data_mnist/`:
 - `train-images.idx3-ubyte`
 - `train-labels.idx1-ubyte`
 - `t10k-images.idx3-ubyte`
