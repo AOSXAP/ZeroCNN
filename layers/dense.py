@@ -1,4 +1,5 @@
 import random
+import math
 from layers.layer import Layer
 
 '''
@@ -12,8 +13,9 @@ class DenseLayer(Layer):
         self.input_size = input_size
         self.output_size = output_size
         
-        self.weights = [[random.uniform(-0.1, 0.1) for _ in range(self.input_size)] for _ in range(self.output_size)]
-        self.bias = [random.uniform(-0.1, 0.1) for _ in range(self.output_size)]
+        limit = math.sqrt(2.0 / input_size)  # He initialization variant
+        self.weights = [[random.uniform(-limit, limit) for _ in range(self.input_size)] for _ in range(self.output_size)]
+        self.bias = [0.01 for _ in range(self.output_size)]  # Small positive bias
 
     def forward(self, input):
         self.input = input
